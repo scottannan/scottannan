@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Economics of Sports: A Critical Analysis</title>
+    <meta name="description" content="An in-depth analysis of professional sports economics, salary trends, and the ethical implications of the commercialization of athletics.">
+    
+    <!-- OpenGraph for social sharing -->
+    <meta property="og:title" content="The Economics of Sports: A Critical Analysis">
+    <meta property="og:description" content="Interactive analysis of sports salaries, ticket prices, and the crisis in youth athletics.">
+    <meta property="og:type" content="website">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        
+        .header p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .intro {
+            padding: 60px 40px;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .intro h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #1e293b;
+        }
+        
+        .intro p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #475569;
+        }
+        
+        .publications {
+            padding: 60px 40px;
+        }
+        
+        .publications h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #1e293b;
+        }
+        
+        .pub-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .pub-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .pub-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+        
+        .pub-card .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .badge-interactive {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .badge-essay {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .badge-analysis {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .pub-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #1e293b;
+        }
+        
+        .pub-card p {
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+        
+        .pub-card .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        
+        .pub-card .btn:hover {
+            background: #5568d3;
+        }
+        
+        .footer {
+            background: #1e293b;
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .footer p {
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+        
+        .footer a {
+            color: #93c5fd;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .header, .intro, .publications {
+                padding: 40px 20px;
+            }
+            
+            .pub-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>The Economics of Sports:<br>A Critical Analysis</h1>
+            <p>Examining 50 years of salary growth, the unsustainable future of professional sports economics, and the moral crisis in youth athletics</p>
+        </div>
+        
+        <div class="intro">
+            <h2>About This Research</h2>
+            <p>This collection presents a comprehensive analysis of professional sports economics, from historical salary trends to future projections, and explores the profound ethical implications of the commercialization of athletics—from professional leagues down to children's sports.</p>
+            
+            <p>Through interactive data visualization and in-depth essays, we examine:</p>
+            <ul style="margin-left: 20px; margin-top: 15px; color: #475569;">
+                <li>50 years of salary and ticket price data across major sports leagues</li>
+                <li>Projections for the next 20 years and what could break the model</li>
+                <li>The moral implications of wealth inequality in sports access</li>
+                <li>How professional sports economics destroyed youth athletics</li>
+                <li>The transformation of play into labor for children</li>
+            </ul>
+            
+            <p style="margin-top: 20px; font-style: italic; color: #64748b;">This research asks uncomfortable questions about whether the current trajectory of sports economics is sustainable—or ethical.</p>
+        </div>
+        
+        <div class="publications">
+            <h2>Explore the Analysis</h2>
+            
+            <div class="pub-grid">
+                <a href="interactive-forecast.html" class="pub-card">
+                    <span class="badge badge-interactive">Interactive Tool</span>
+                    <h3>Sports Salary & Ticket Price Forecast</h3>
+                    <p>Interactive visualization of 50 years of historical data (1975-2025) with 20-year projections (2026-2045) for NBA, NFL, MLB, and NHL. Explore the unsustainable growth model and what could break it.</p>
+                    <span class="btn">Launch Interactive Tool →</span>
+                </a>
+                
+                <a href="youth-sports-crisis.html" class="pub-card">
+                    <span class="badge badge-essay">Essay</span>
+                    <h3>The Death of Innocent Play</h3>
+                    <p>A comprehensive examination of how professional sports economics transformed youth athletics from playful skill development into a $52 billion extraction industry that destroys childhood.</p>
+                    <span class="btn">Read Full Essay →</span>
+                </a>
+                
+                <a href="ethical-analysis.html" class="pub-card">
+                    <span class="badge badge-analysis">Analysis</span>
+                    <h3>Ethical Implications</h3>
+                    <p>Exploring class segregation in public spaces, the taxpayer subsidy of billionaires, destruction of family traditions, and the extractive business model that prioritizes revenue over community.</p>
+                    <span class="btn">Read Analysis →</span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Research and analysis completed January 2025</p>
+            <p>Data sources: NBA, NFL, MLB, NHL official statistics; Bureau of Labor Statistics; Aspen Institute; Academic research</p>
+            <p style="margin-top: 20px;">Questions or feedback? <a href="mailto:your-email@example.com">Get in touch</a></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Salary & Ticket Price Forecast (2025-2045)</title>
+    <meta name="description" content="Interactive visualization of 50 years of sports salary and ticket price data with 20-year projections">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/recharts@2.5.0/dist/Recharts.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState } = React;
+        const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } = window.Recharts;
+        
+        const TrendingUp = () => <span style={{fontSize: '24px'}}>📈</span>;
+        const DollarSign = ({size}) => <span style={{fontSize: size ? `${size}px` : '20px'}}>💰</span>;
+        const Ticket = ({size}) => <span style={{fontSize: size ? `${size}px` : '20px'}}>🎟️</span>;
+        const Home = () => <span style={{fontSize: '16px'}}>🏠</span>;
+
+        const SportsSalaryForecast = () => {
+          const [selectedLeague, setSelectedLeague] = useState('NBA');
+          
+          const leagues = {
+            NBA: {
+              color: '#FF6B35',
+              historicalAvg: [
+                { year: 1975, salary: 0.107, ticket: 7 },
+                { year: 1985, salary: 0.325, ticket: 15 },
+                { year: 1995, salary: 1.9, ticket: 35 },
+                { year: 2005, salary: 4.5, ticket: 60 },
+                { year: 2015, salary: 4.6, ticket: 85 },
+                { year: 2020, salary: 7.7, ticket: 110 },
+                { year: 2025, salary: 11.91, ticket: 160 }
+              ],
+              growthRate: 0.085,
+              ticketGrowth: 0.065
+            },
+            NFL: {
+              color: '#4ECDC4',
+              historicalAvg: [
+                { year: 1975, salary: 0.056, ticket: 12 },
+                { year: 1985, salary: 0.194, ticket: 25 },
+                { year: 1995, salary: 0.717, ticket: 42 },
+                { year: 2005, salary: 1.4, ticket: 65 },
+                { year: 2015, salary: 2.1, ticket: 95 },
+                { year: 2020, salary: 3.2, ticket: 125 },
+                { year: 2025, salary: 4.5, ticket: 180 }
+              ],
+              growthRate: 0.072,
+              ticketGrowth: 0.068
+            },
+            MLB: {
+              color: '#95E1D3',
+              historicalAvg: [
+                { year: 1975, salary: 0.045, ticket: 4 },
+                { year: 1985, salary: 0.372, ticket: 8 },
+                { year: 1995, salary: 1.11, ticket: 14 },
+                { year: 2005, salary: 2.63, ticket: 25 },
+                { year: 2015, salary: 4.25, ticket: 40 },
+                { year: 2020, salary: 4.43, ticket: 55 },
+                { year: 2025, salary: 5.1, ticket: 80 }
+              ],
+              growthRate: 0.048,
+              ticketGrowth: 0.062
+            },
+            NHL: {
+              color: '#A8DADC',
+              historicalAvg: [
+                { year: 1975, salary: 0.06, ticket: 6 },
+                { year: 1985, salary: 0.18, ticket: 12 },
+                { year: 1995, salary: 0.73, ticket: 28 },
+                { year: 2005, salary: 1.5, ticket: 48 },
+                { year: 2015, salary: 2.4, ticket: 65 },
+                { year: 2020, salary: 2.75, ticket: 82 },
+                { year: 2025, salary: 3.49, ticket: 110 }
+              ],
+              growthRate: 0.056,
+              ticketGrowth: 0.058
+            }
+          };
+
+          const generateProjections = (league) => {
+            const data = [...league.historicalAvg];
+            const lastYear = 2025;
+            const lastSalary = league.historicalAvg[league.historicalAvg.length - 1].salary;
+            const lastTicket = league.historicalAvg[league.historicalAvg.length - 1].ticket;
+            
+            for (let year = 2026; year <= 2045; year++) {
+              const yearsFromLast = year - lastYear;
+              const projectedSalary = lastSalary * Math.pow(1 + league.growthRate, yearsFromLast);
+              const projectedTicket = lastTicket * Math.pow(1 + league.ticketGrowth, yearsFromLast);
+              
+              data.push({
+                year,
+                salary: projectedSalary,
+                ticket: projectedTicket,
+                projected: true
+              });
+            }
+            
+            return data;
+          };
+
+          const chartData = generateProjections(leagues[selectedLeague]);
+          const current2025 = leagues[selectedLeague].historicalAvg[6];
+          const projected2035 = chartData.find(d => d.year === 2035);
+          const projected2045 = chartData.find(d => d.year === 2045);
+          
+          const salaryIncrease2035 = ((projected2035.salary / current2025.salary - 1) * 100).toFixed(0);
+          const ticketIncrease2035 = ((projected2035.ticket / current2025.ticket - 1) * 100).toFixed(0);
+
+          return (
+            <div className="w-full min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 md:p-8">
+              <div className="max-w-7xl mx-auto">
+                <a href="index.html" className="inline-flex items-center gap-2 text-slate-300 hover:text-white mb-6 transition-colors text-sm md:text-base">
+                  <Home /> Back to Home
+                </a>
+                
+                <div className="mb-8">
+                  <h1 className="text-2xl md:text-4xl font-bold text-white mb-2 flex items-center gap-3">
+                    <TrendingUp />
+                    Sports Economics: 50-Year Analysis & 20-Year Forecast
+                  </h1>
+                  <p className="text-slate-300 text-sm md:text-base">Historical trends (1975-2025) and projections (2026-2045) for professional sports</p>
+                </div>
+
+                <div className="flex flex-wrap gap-3 md:gap-4 mb-8">
+                  {Object.keys(leagues).map(league => (
+                    <button
+                      key={league}
+                      onClick={() => setSelectedLeague(league)}
+                      className={`px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold transition-all text-sm md:text-base ${
+                        selectedLeague === league
+                          ? 'bg-emerald-500 text-white shadow-lg scale-105'
+                          : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                      }`}
+                    >
+                      {league}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8">
+                  <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 md:p-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <DollarSign />
+                      <h3 className="text-slate-400 text-xs md:text-sm font-medium">2025 Avg Salary</h3>
+                    </div>
+                    <p className="text-xl md:text-3xl font-bold text-white">${current2025.salary.toFixed(2)}M</p>
+                  </div>
+                  
+                  <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 md:p-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Ticket />
+                      <h3 className="text-slate-400 text-xs md:text-sm font-medium">2025 Avg Ticket</h3>
+                    </div>
+                    <p className="text-xl md:text-3xl font-bold text-white">${current2025.ticket}</p>
+                  </div>
+                  
+                  <div className="bg-slate-800 border border-emerald-900/30 rounded-lg p-4 md:p-6">
+                    <h3 className="text-slate-400 text-xs md:text-sm font-medium mb-2">2035 Projection</h3>
+                    <p className="text-lg md:text-xl font-bold text-emerald-400">${projected2035.salary.toFixed(1)}M salary</p>
+                    <p className="text-xs md:text-sm text-slate-400 mt-1">+{salaryIncrease2035}% increase</p>
+                  </div>
+                  
+                  <div className="bg-slate-800 border border-blue-900/30 rounded-lg p-4 md:p-6">
+                    <h3 className="text-slate-400 text-xs md:text-sm font-medium mb-2">2035 Tickets</h3>
+                    <p className="text-lg md:text-xl font-bold text-blue-400">${projected2035.ticket.toFixed(0)} avg</p>
+                    <p className="text-xs md:text-sm text-slate-400 mt-1">+{ticketIncrease2035}% increase</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-8">
+                  <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 md:p-6">
+                    <h3 className="text-lg md:text-xl font-semibold text-white mb-4">Average Player Salary</h3>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <LineChart data={chartData}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                        <XAxis dataKey="year" stroke="#94a3b8" tick={{ fill: '#94a3b8', fontSize: 12 }} />
+                        <YAxis stroke="#94a3b8" tick={{ fill: '#94a3b8', fontSize: 12 }} tickFormatter={(value) => `$${value.toFixed(1)}M`} />
+                        <Tooltip 
+                          contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #334155', fontSize: '14px' }}
+                          labelStyle={{ color: '#e2e8f0' }}
+                          formatter={(value) => [`$${value.toFixed(2)}M`, 'Avg Salary']}
+                        />
+                        <Line 
+                          type="monotone" 
+                          dataKey="salary" 
+                          stroke={leagues[selectedLeague].color}
+                          strokeWidth={3}
+                          dot={false}
+                          strokeDasharray={(entry, index) => chartData[index]?.projected ? "5 5" : "0"}
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+
+                  <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 md:p-6">
+                    <h3 className="text-lg md:text-xl font-semibold text-white mb-4">Average Ticket Price</h3>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <LineChart data={chartData}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                        <XAxis dataKey="year" stroke="#94a3b8" tick={{ fill: '#94a3b8', fontSize: 12 }} />
+                        <YAxis stroke="#94a3b8" tick={{ fill: '#94a3b8', fontSize: 12 }} tickFormatter={(value) => `$${value}`} />
+                        <Tooltip 
+                          contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #334155', fontSize: '14px' }}
+                          labelStyle={{ color: '#e2e8f0' }}
+                          formatter={(value) => [`$${value.toFixed(0)}`, 'Avg Ticket']}
+                        />
+                        <Line 
+                          type="monotone" 
+                          dataKey="ticket" 
+                          stroke="#3b82f6"
+                          strokeWidth={3}
+                          dot={false}
+                          strokeDasharray={(entry, index) => chartData[index]?.projected ? "5 5" : "0"}
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+
+                <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 md:p-6 mb-6">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-4">Detailed 20-Year Projections</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs md:text-sm">
+                      <thead>
+                        <tr className="border-b border-slate-700">
+                          <th className="text-left py-3 px-2 md:px-4 text-slate-300 font-medium">Year</th>
+                          <th className="text-right py-3 px-2 md:px-4 text-slate-300 font-medium">Avg Salary</th>
+                          <th className="text-right py-3 px-2 md:px-4 text-slate-300 font-medium">Change</th>
+                          <th className="text-right py-3 px-2 md:px-4 text-slate-300 font-medium">Avg Ticket</th>
+                          <th className="text-right py-3 px-2 md:px-4 text-slate-300 font-medium">Change</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[2025, 2030, 2035, 2040, 2045].map((targetYear) => {
+                          const data = chartData.find(d => d.year === targetYear);
+                          const prevData = chartData.find(d => d.year === targetYear - 5) || current2025;
+                          const salaryChange = ((data.salary / prevData.salary - 1) * 100).toFixed(1);
+                          const ticketChange = ((data.ticket / prevData.ticket - 1) * 100).toFixed(1);
+                          
+                          return (
+                            <tr key={targetYear} className="border-b border-slate-700/50 hover:bg-slate-700/30">
+                              <td className="py-3 px-2 md:px-4 text-white font-medium">{targetYear}</td>
+                              <td className="py-3 px-2 md:px-4 text-right text-emerald-400 font-semibold">
+                                ${data.salary.toFixed(2)}M
+                              </td>
+                              <td className="py-3 px-2 md:px-4 text-right text-slate-400">
+                                +{salaryChange}%
+                              </td>
+                              <td className="py-3 px-2 md:px-4 text-right text-blue-400 font-semibold">
+                                ${data.ticket.toFixed(0)}
+                              </td>
+                              <td className="py-3 px-2 md:px-4 text-right text-slate-400">
+                                +{ticketChange}%
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div className="text-xs text-slate-500 text-center">
+                  Model based on 50 years of historical data (1975-2025) with compound annual growth rates applied. Projections assume stable economic conditions and continued media rights growth.
+                </div>
+              </div>
+            </div>
+          );
+        };
+
+        ReactDOM.render(<SportsSalaryForecast />, document.getElementById('root'));
+    </script>
+</body>
+</html>
